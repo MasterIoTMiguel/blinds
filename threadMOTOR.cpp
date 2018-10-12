@@ -2,9 +2,6 @@
 #include "rtos.h"
 #include "motor.h"
 
-#define ST 0
-#define UP 1
-#define DW 2
 #define MAXAPERTURE 100
 #define MINAPERTURE 0
 
