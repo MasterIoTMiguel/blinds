@@ -13,7 +13,7 @@ DigitalOut down(LED2);
 Thread threadMOTOR(osPriorityNormal, 512); // 1K stack size
 
 int motorSignal;
-int aperture;
+int aperture=100;
 
 void MOTOR_thread();
 
