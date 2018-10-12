@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include "rtos.h"
+#include "motor.h"
 
 #define ST 0
 #define UP 1
@@ -32,17 +33,31 @@ void MOTOR_thread() {
 					break;
 				
 				case UP:
-					pc.printf("\n\rRISING BLINDS");
-					up=1;
-					down = !up;
-					aperture = aperture + 10;
+					
+					if(aperture < MAXAPERTURE){
+						pc.printf("\n\rRISING BLINDS");
+						up=1;
+						down = !up;
+						aperture = aperture + 10;
+					}else{
+						pc.printf("\n\rSTOP");
+						up=0;
+						down=0;
+					}
 					break;
 				
 				case DW:
-					pc.printf("\n\rLOWERING BLINDS");
-					up=0;
-					down = !up;
-					aperture = aperture - 10;
+					
+					if(aperture > MINAPERTURE){
+						pc.printf("\n\rLOWERING BLINDS");
+						up=0;
+						down = !up;
+						aperture = aperture - 10;
+					}else{
+						pc.printf("\n\rSTOP");
+						up=0;
+						down=0;
+					}
 					break;
 			}		
 		}

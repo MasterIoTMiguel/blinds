@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include "rtos.h"
+#include "motor.h"
 
 #define MAXVALUE 70
 #define MINVALUE 40
@@ -36,38 +37,16 @@ int main() {
     while (true) {
 			
 			pc.printf("\n\r");
-			//threadMOTOR.signal_set(0x3);
-			// SOIL MOISTURE
 			pc.printf("\n\rLight Sensor: %.1f%%",valueLS);
 		
 			if(valueLS < MINVALUE){
-				motorSignal = UP; 
-				if(aperture < MAXAPERTURE){
-					pc.printf("\n\rRISING BLINDS");
-					up=1;
-					down = !up;
-					aperture = aperture + 10;
-				}else{
-					pc.printf("\n\rSTOP");
-					up=0;
-					down=0;
-				}
+				motorSignal = UP;
 			}else if (valueLS > MAXVALUE){
-				if(aperture > MINAPERTURE){
-					pc.printf("\n\rLOWERING BLINDS");
-					up=0;
-					down = !up;
-					aperture = aperture - 10;
-				}else{
-					pc.printf("\n\rSTOP");
-					up=0;
-					down=0;
-				}
+				motorSignal = DW;
 			}else{
-				pc.printf("\n\rSTOP");
-				up=0;
-				down=0;
+				motorSignal = ST;
 			}
+			threadMOTOR.signal_set(0x1);
 
 			wait(2);
 			
