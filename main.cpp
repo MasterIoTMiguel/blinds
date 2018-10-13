@@ -22,6 +22,7 @@ extern float valueLS;
 
 extern int motorSignal; 
 
+float preValueLS=0;
 
 
 // main() runs in its own thread in the OS
@@ -35,18 +36,19 @@ int main() {
     pc.printf("mbed-os-rev: %d.%d.%d\r\n", MBED_MAJOR_VERSION, MBED_MINOR_VERSION, MBED_PATCH_VERSION);	
 	
     while (true) {
+			if(valueLS != preValueLS){
+				pc.printf("\n\r");
+				pc.printf("\n\rLight Sensor: %.1f%%",valueLS);
 			
-			pc.printf("\n\r");
-			pc.printf("\n\rLight Sensor: %.1f%%",valueLS);
-		
-			if(valueLS < MINVALUE){
-				motorSignal = UP;
-			}else if (valueLS > MAXVALUE){
-				motorSignal = DW;
-			}else{
-				motorSignal = ST;
+				if(valueLS < MINVALUE){
+					motorSignal = UP;
+				}else if (valueLS > MAXVALUE){
+					motorSignal = DW;
+				}else{
+					motorSignal = ST;
+				}
+				threadMOTOR.signal_set(0x1);
 			}
-			threadMOTOR.signal_set(0x1);
 
 			wait(2);
 			

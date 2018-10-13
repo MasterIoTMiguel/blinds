@@ -13,8 +13,9 @@ void ANALOG_thread();
 void ANALOG_thread() {
 		while (true) {
 
-				Thread::wait(200);
-				valueLS=lightSensor*100;
+				//Thread::
+			wait(200);
+			valueLS=lightSensor*100;
 				  
     }
 } 
